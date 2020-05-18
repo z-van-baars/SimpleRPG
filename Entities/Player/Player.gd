@@ -17,6 +17,12 @@ var attack_cooldown_time = 600
 var next_attack_time = 0
 var attack_damage = 30
 
+# Fireball variables
+var fireball_damage = 50
+var fireball_cooldown_time = 1000
+var next_fireball_time = 0
+
+var fireball_scene = preload("res://Entities/Fireball/Fireball.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -109,16 +115,25 @@ func _input(event):
 			next_attack_time = now + attack_cooldown_time
 
 	elif event.is_action_pressed("fireball"):
-		if mana >= 25:
+		var now = OS.get_ticks_msec()
+		if mana >= 25 and now >= next_fireball_time:
 			mana -= 25
 			emit_signal("player_stats_changed", self)
 			attack_playing = true
 			var animation = get_animation_direction(last_direction) + "_fireball"
 			$Sprite.play(animation)
+			next_fireball_time = now + fireball_cooldown_time
 
 	
 
 
 func _on_Sprite_animation_finished():
 	attack_playing = false
+	if $Sprite.animation.ends_with("_fireball"):
+		# instantiate fireball
+		var fireball = fireball_scene.instance()
+		fireball.attack_damage = fireball_damage
+		fireball.direction = last_direction.normalized()
+		fireball.position = position + last_direction.normalized() * 4
+		get_tree().root.get_node("Root").add_child(fireball)
 	
