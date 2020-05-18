@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://Entities/Player/player_left_walk_2.png" type="Texture" id=1]
 [ext_resource path="res://Tilesets/MapTileset.tres" type="TileSet" id=2]
@@ -48,6 +48,7 @@
 [ext_resource path="res://GUI/LevelPopup.gd" type="Script" id=46]
 [ext_resource path="res://Entities/Fiona/Fiona.tscn" type="PackedScene" id=47]
 [ext_resource path="res://GUI/DialoguePopup.gd" type="Script" id=48]
+[ext_resource path="res://Entities/Necklace/Necklace.tscn" type="PackedScene" id=49]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 4, 5 )
@@ -506,6 +507,9 @@ position = Vector2( 179.721, 100.401 )
 
 [node name="Fiona" parent="." instance=ExtResource( 47 )]
 position = Vector2( 275.959, 15.8446 )
+
+[node name="Necklace" parent="." instance=ExtResource( 49 )]
+position = Vector2( 19.1197, 23.948 )
 [connection signal="player_level_up" from="Player" to="CanvasLayer/LevelPopup" method="_on_Player_player_level_up"]
 [connection signal="player_stats_changed" from="Player" to="CanvasLayer/Health" method="_on_Player_player_stats_changed"]
 [connection signal="player_stats_changed" from="Player" to="CanvasLayer/Mana" method="_on_Player_player_stats_changed"]
