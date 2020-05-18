@@ -22,7 +22,7 @@ func _ready():
 	rng.randomize()
 	
 	# Create Skelets
-	for i in range(start_skeletons):
+	for _i in range(start_skeletons):
 		instance_skeleton()
 	skeleton_count = start_skeletons
 

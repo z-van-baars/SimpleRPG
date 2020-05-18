@@ -7,6 +7,9 @@ var player
 # RNG
 var rng = RandomNumberGenerator.new()
 
+var potion_scene = preload("res://Entities/Potion/Potion.tscn")
+var gem_scene = preload("res://Entities/Gem/Gem.tscn")
+
 # movement vars
 export var speed = 25
 var direction: Vector2
@@ -24,6 +27,7 @@ var health_regeneration = 1
 var attack_damage = 10
 var attack_cooldown_time = 1500
 var next_attack_time = 0
+
 
 
 func _ready():
@@ -110,6 +114,18 @@ func hit(damage):
 		other_animation_playing = true
 		$AnimatedSprite.play("death")
 		emit_signal("death")
+		
+		if rng.randf() <= 0.8:
+			if rng.randf() <= 0.6:
+				var gem = gem_scene.instance()
+				get_tree().root.get_node("Root").call_deferred("add_child", gem)
+				gem.position = position
+			else:
+				var potion = potion_scene.instance()
+				potion.type = rng.randi() % 2
+				get_tree().root.get_node("Root").call_deferred("add_child", potion)
+				potion.position = position
+		player.add_xp(25)
 
 func arise():
 	other_animation_playing = true
